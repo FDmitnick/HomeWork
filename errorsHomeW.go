@@ -37,10 +37,14 @@ func connectMysql() error{
 // 获取到sql 句柄之后，对取到的数据进行查询
 func readSql(DB *sql.DB) error{
 	// 查询数据
-	_, errWarp := DB.Query("select id, name from users where id = ?", 1)
-	if errWarp != nil {
-		return errors.Wrap(errWarp, "Query")
+	var id string 
+	row  := DB.QueryRow("SELECT id FROM error_test WHERE money = 33")
+	if err := row.Scan(&id); err != nil {
+        return errors.Wrap(err, "Query")
+	}else{
+		fmt.Println(id)
 	}
+	
 
 	// 查询数据数量
 	return nil
@@ -53,8 +57,9 @@ func writeSql(DB *sql.DB) error{
 		if test == 10{
 			test = 1
 		}
+
 		sql := fmt.Sprintf(
-			"insert into error_test(id, age, money) values (%d, %d, %d)",
+			"insert IGNORE  into error_test(id, age, money) values (%d, %d, %d)",
 			i,
 			test,
 			i,
@@ -62,7 +67,6 @@ func writeSql(DB *sql.DB) error{
 
 		_, err := DB.Exec(sql)
 		if err!=nil{
-			fmt.Printf("Exec failed \n");
 			errWarp := errors.Wrap(err, "Exec 失败")
 			return errWarp
 		}else{
@@ -81,38 +85,35 @@ func main(){
 
 	// 捕捉错误
 	defer func(){
-		if err=recover(); err!=nil{
+		if err:=recover(); err!=nil{
 			fmt.Printf(" have a panic action , need recover \n")
-			fmt.Printf("stack err trace: %+v :%T, %v \n", err, errors.Cause(err), errors.Cause(err))
+			//fmt.Printf("stack err trace: %+v :%T, %v \n", err, errors.Cause(err), errors.Cause(err))
 			panic.PrintStack()
             //os.Exit(1)
 		}
 	}()
 	
-	// 链接数据库
-	err = connectMysql()
-		fmt.Printf("stack err trace: %+v :%T, %v \n", err, errors.Cause(err), errors.Cause(err))
-	}
-
-
-	DB,err =sql.Open("mysql","root:ZMZzmz761028@(127.0.0.1:3306)/errorTest")
+	DB,err :=sql.Open("mysql","root:ZMZzmz761028@(127.0.0.1:3306)/errorTest")
 	if err != nil{
 		fmt.Println(err)
 		errWarp := errors.Wrap(err, "open 连接失败")
-		return  errWarp
+		fmt.Printf("stack err trace: %+v :%T, %v \n", errWarp, errors.Cause(errWarp), errors.Cause(errWarp))
+		return
 	}else{
-		//fmt.Println("open connect success ")
+		fmt.Println("open connect success ")
 	}
 
 
 	err = writeSql(DB)
 	if err != nil{
 		fmt.Printf("stack err trace: %+v :%T, %v \n", err, errors.Cause(err), errors.Cause(err))
+		return
 	}
 
 	err = readSql(DB)
 	if err != nil{
 		fmt.Printf("stack err trace: %+v :%T, %v \n", err, errors.Cause(err), errors.Cause(err))
+		return
 	}
 }
 
