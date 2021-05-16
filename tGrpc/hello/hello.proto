@@ -1,0 +1,21 @@
+syntax="proto3";
+package hello;
+// 请求参数-根据自己的需求定义
+message HelloRequest{
+    string greeting=1;
+}
+// 返回参数-根据自己的需求定义
+message HelloResponse{
+    string reply=1;
+}
+// 定义一个HelloMyService服务,其中API为SayHello
+// 形式参数: HelloRequest
+// 返回参数:HelloResponse
+service HelloMyService {
+  rpc SayHello(HelloRequest) returns (HelloResponse){}
+  // rpc 借口的类型分为一下四种: A为接受参数,B为返回参数
+   // 1. rpc GetFeature(Point) returns (Feature) {} 普通调用:A-B
+   // 2. rpc ListFeatures(Rectangle) returns (stream Feature) {} 单向流:A - B(流)
+   // 3. rpc RecordRoute(stream Point) returns (RouteSummary) {} 单向流:A(流) - B
+   // 4. rpc RouteChat(stream RouteNote) returns (stream RouteNote) {} 双向流:A(流) - B(流)
+}
