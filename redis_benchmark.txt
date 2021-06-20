@@ -1,0 +1,46 @@
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 10  -t get  -n 10000 -q 
+GET: 86206.90 requests per second
+
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 20  -t get  -n 10000 -q
+GET: 78125.00 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 50  -t get  -n 10000 -q
+GET: 99009.90 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 100  -t get  -n 10000 -q
+GET: 99009.90 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 200  -t get  -n 10000 -q
+GET: 90090.09 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 1000  -t get  -n 10000 -q
+GET: 112359.55 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 5000  -t get  -n 10000 -q
+GET: 95238.10 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# 
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 10  -t set  -n 10000 -q
+SET: 104166.66 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 20  -t set  -n 10000 -q
+SET: 80000.00 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 50  -t set  -n 10000 -q
+SET: 97087.38 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 100  -t set  -n 10000 -q
+SET: 112359.55 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 200  -t set  -n 10000 -q
+SET: 76923.08 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 1000  -t set  -n 10000 -q
+SET: 114942.53 requests per second
+
+[root@iZwz963es3sadz4jo2d6i1Z cmd]# redis-benchmark -h 127.0.0.1 -p 6379 -c 50 -d 5000  -t set  -n 10000 -q
+SET: 75187.97 requests per second
+
+
+最后得出结论，value 为1000的时候最优，原因还在查找中
